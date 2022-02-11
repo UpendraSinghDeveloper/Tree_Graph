@@ -1,0 +1,63 @@
+***********Program to calculate connected components In a graph************************
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10;
+vector<int> v[N];
+bool vis[N];
+vector<vector<int> >cc;
+vector<int> curr_cc;
+
+void dfs(int vertex)
+{
+    curr_cc.push_back(vertex);
+    vis[vertex] = true;
+    for(int i  : v[vertex])
+    {
+        if(vis[i]) continue;
+        dfs(i);
+
+    }
+
+}
+int main()
+{
+    for(int i=0; i<N; i++)
+    {
+        vis[i] = false;
+
+    }
+    int m,n;
+    cin>>m>>n;
+    for(int i=0;i<n;i++)
+    {
+
+        int v1,v2;
+        cin>>v1>>v2;
+        v[v1].push_back(v2);
+        v[v2].push_back(v1);
+
+    }
+    int counter = 0;
+    for(int i=1;i<=m;i++)
+    {
+        if(vis[i]) continue;
+        curr_cc.clear();
+        dfs(i);
+        cc.push_back(curr_cc);
+        counter++;
+
+    }
+    cout<<cc.size()<<endl;
+    
+    /* for(auto i: cc)
+    {
+      for(int vertex : i){            // this code is to print the connected components
+          cout<<vertex<<" ";
+      }
+      cout<<endl;
+    }
+    */
+    return 0;
+}
+
