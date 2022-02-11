@@ -1,0 +1,56 @@
+===============Program to check whether any cycle exist in graph or not=====================
+
+#include<bits/stdc++.h>
+using namespace std;
+const int N = 1e5+10;
+vector<int> v[N];
+bool vis[N];
+
+bool dfs(int vertex, int parent)
+{
+
+    vis[vertex] = true;
+    bool isLoopExist = false;
+    for(int i  : v[vertex])
+    {
+        if(vis[i] && i == parent) continue;
+        if(vis[i]) return true;
+        isLoopExist |=  dfs(i,vertex);
+
+    }
+    return   isLoopExist;
+}
+int main()
+{
+    for(int i=0; i<N; i++)
+    {
+        vis[i] = false;
+
+    }
+    int m,n;
+    cin>>m>>n;
+    for(int i=0;i<n;i++)
+    {
+
+        int v1,v2;
+        cin>>v1>>v2;
+        v[v1].push_back(v2);
+        v[v2].push_back(v1);
+
+    }
+    bool isLoopExist = false;
+    for(int i=1;i<=m;i++)
+    {
+        if(vis[i]) continue;
+
+        if(dfs(i,0)){
+            isLoopExist = true;
+            break;
+        }
+
+    }
+    cout<<isLoopExist<<endl;
+
+    return 0;
+}
+
